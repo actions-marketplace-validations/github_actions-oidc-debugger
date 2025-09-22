@@ -1,3 +1,22 @@
+# ⚠️ Archival notice
+
+Due to the lack of time we could allocate to this repo, we've decided to archive it.
+
+You can use [`steve-todorov`'s version](https://github.com/steve-todorov/oidc-debugger-action/blob/f9915fe9dc64133704c072eb59436373c23e9fdd/action.yml) instead.
+
+If you want just the code ([reference](https://github.com/github/actions-oidc-debugger/issues/30#issuecomment-3169059282), thanks again to `steve-todorov`):
+```yaml
+- name: Show OIDC claims (right before assume)
+  env:
+    AUDIENCE: "sts.amazonaws.com"
+  run: |
+    TOKEN_JSON=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=$AUDIENCE")
+    ID_TOKEN=$(echo "$TOKEN_JSON" | jq -r .value)
+    echo "$ID_TOKEN" | awk -F. '{print $2}' | base64 -d 2>/dev/null | jq -r
+```
+
+---
+
 # actions-oidc-debugger
 
 This action requests a JWT and prints the claims included within the JWT received from GitHub Actions.
